@@ -18,36 +18,35 @@ function App() {
   const [windSpeed, setWindSpeed] = useState("");
   const [enterKeyPressed, setEnterKeyPressed] = useState(false);
 
-  async function getApiDetails() {
-    setLoading(true);
-    setCityNotFound(false);
-    let apiurl = `https:api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=72f1324d30a4ee953d5452eb5947071e&units=Metric`;
-    try {
-      const res = await axios.get(apiurl);
-      const apiData = res.data;
-      console.log(apiData);
-      setWeatherIcon(
-        `https://openweathermap.org/img/wn/${apiData.weather[0].icon}@2x.png`
-      );
-      setTemperature(Math.floor(apiData.main.temp));
-      setWeatherDescription(apiData.weather[0].description);
-      setCity(apiData.name);
-      setCountry(apiData.sys.country);
-      setLatitude(apiData.coord.lat);
-      setLongitude(apiData.coord.lon);
-      setHumidity(apiData.main.humidity);
-      setWindSpeed(apiData.wind.speed);
-      setCityNotFound(false);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-
-      setCityNotFound(true);
-      console.error("Error fetching API data:", error);
-    }
-  }
-
   useEffect(() => {
+    async function getApiDetails() {
+      setLoading(true);
+      setCityNotFound(false);
+      let apiurl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=72f1324d30a4ee953d5452eb5947071e&units=Metric`;
+      try {
+        const res = await axios.get(apiurl);
+        const apiData = res.data;
+        console.log(apiData);
+        setWeatherIcon(
+          `https://openweathermap.org/img/wn/${apiData.weather[0].icon}@2x.png`
+        );
+        setTemperature(Math.floor(apiData.main.temp));
+        setWeatherDescription(apiData.weather[0].description);
+        setCity(apiData.name);
+        setCountry(apiData.sys.country);
+        setLatitude(apiData.coord.lat);
+        setLongitude(apiData.coord.lon);
+        setHumidity(apiData.main.humidity);
+        setWindSpeed(apiData.wind.speed);
+        setCityNotFound(false);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+
+        setCityNotFound(true);
+        console.error("Error fetching API data:", error);
+      }
+    }
     getApiDetails();
   }, [enterKeyPressed]);
 
