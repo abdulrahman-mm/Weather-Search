@@ -26,7 +26,6 @@ function App() {
       try {
         const res = await axios.get(apiurl);
         const apiData = res.data;
-        console.log(apiData);
         setWeatherIcon(
           `https://openweathermap.org/img/wn/${apiData.weather[0].icon}@2x.png`
         );
@@ -48,7 +47,7 @@ function App() {
       }
     }
     getApiDetails();
-  }, [enterKeyPressed]);
+  }, [enterKeyPressed,searchCity]);
 
   function onSearchCityName(e) {
     if (e.key === "Enter") {
